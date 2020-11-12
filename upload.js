@@ -1,8 +1,9 @@
+require('dotenv').config()
 const AWS = require('aws-sdk');
 
 // TODO use this instead of current means of upload?
 // The name of the bucket that you have created
-const BUCKET_NAME = 'crossover-test-bucket-will2s';
+const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
 
 export const uploadFile = (file, type, size) => {
 // TODO check the content type/size is properly set
