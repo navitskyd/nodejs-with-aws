@@ -12,7 +12,9 @@
     "aws-sdk": "^2.788.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
+    "http-aws-es": "^6.0.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "sharp": "^0.26.2"

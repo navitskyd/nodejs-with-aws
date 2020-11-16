@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const AWS = require("aws-sdk");
 const cors = require('cors')
-var mysql = require('mysql');
+const mysql = require('mysql');
+const connectionClass = require('http-aws-es');
+const elasticsearch = require('elasticsearch');
 
 const app = express()
 
@@ -30,9 +32,56 @@ AWS.config.getCredentials(function (err) {
   }
 });
 
+app.get('/search', function(req, res) {
+// Access the provided 'page' and 'limt' query parameters
+  let offset = req.query.p * 20;
+  let description = req.query.d;
+  let type = req.query.t;
+
+  var client = elasticsearch.Client({
+    host: 'localhost:9200'
+  });
+  
+  // https://stackoverflow.com/questions/48273935/how-to-access-aws-elasticsearch-from-node-js
+//   var elasticClient = new elasticsearch.Client({  
+//     host: ***,
+//     log: 'error',
+//     connectionClass: connectionClass,
+//     amazonES: {
+//       credentials: new AWS.EnvironmentCredentials('AWS')
+//     }
+// });
+
+  client.search({
+    from: offset,
+    size: 20,
+    index: 'images',
+    type: 'image',
+    body: {
+      query: {
+            match: {
+              description: {
+                query: description
+              }
+            },
+      }
+    }
+  }).then(function(response) {
+    var hits = response.hits.hits;
+    console.log(hits)
+    res.status(200).send(hits)
+  }).catch(function (error) {
+    console.trace(error.message);
+  });
+
+  // Return the articles to the rendering engine
+  
+});
+
 // Multer single file parser
 const upload = multer({ limits: { fileSize: 500000 } }).single('uploadFile')
 
+// TODO use router? or split the backends
 app.post('/upload', upload, (req, res) => {
   // upload(req, res, function (err) {
     // check for error thrown by multer- file size etc
