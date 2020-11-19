@@ -35,63 +35,64 @@ module.exports = {
     }
   },
 
-  // TODO move the contents of this to services and set up try catches
-  async upload(req, res) {
+  async upload(req, res, next) {
     if (req.file === undefined) {
-      res.status(400).send("File is undefined");
+      res.status(400).send('File is undefined');
       return;
     }
     if (!req.body['description'] || !req.file.mimetype || !req.file.size) {
       res.status(400).send('Missing a parameter');
       return;
     }
-    // S3 upload
-    try {
-      // TODO check file type?
-      const objectParams = {
-        Key: req.file.originalname,
-        Body: req.file.buffer
-      };
-      const uploadRequest = await Services.uploadImageS3(objectParams);
-      try {
-        // RDS insert
-        const pool = await dbconfig.dbPool;
-        let query = `INSERT INTO main.uploads (description, type, size) ` +
-          `VALUES ('${req.body['description']}', '${req.file.mimetype}', '${req.file.size}')`
-        await pool.query(query);
-        // pool.getConnection((err, conn) => {
-        //   if (err) {
-        //     if (conn) {
-        //       conn.release();
-        //     }
-        //     console.log(err)
-        //     throw err;
-        //   }
-        //   let query = `INSERT INTO main.uploads (description, type, size) ` +
-        //   `VALUES ('${req.body['description']}', '${req.file.mimetype}', '${req.file.size}')`
-        //   conn.query(query, function (error, rows) {
-        //     conn.release();
-        //   });
-        //   conn.on('error', function (error) {
-        //     conn.release();
-        //     throw error;
-        //   });
-        // });
-      } catch (err) {
-        // rollback S3 upload
-        console.log('RDS error: ')
-        console.log(err)
-        uploadRequest.abort();
-        console.log("deleted")
-        throw ('Failed to upload to MySQL instance')
-      }
-    } catch (err) {
-      console.log('top level error: ')
-      console.log(err)
-      res.status(500).send(err)
-      return;
-    }
-    res.status(201).send();
+    // TODO check file type?
+    
+    const pool = await dbconfig.dbPool;
+    
+    pool.getConnection((errConnection, connection) => {
+      if (errConnection) { next(errConnection); return; }
+      connection.beginTransaction((errTrans) => {
+        if (errTrans) { next(errTrans); return;}
+        let query = (`
+          INSERT INTO main.uploads (description, type, size) 
+          VALUES ('${req.body['description']}', '${req.file.mimetype}', '${req.file.size}')
+        `)
+        connection.query(query, async (errInsert) => {
+          if (errInsert) { 
+              connection.rollback((errRollback) => {
+                next(errRollback);
+              });
+              return;
+           }
+          try {
+            // RDS insert
+            const objectParams = {
+              Key: req.file.originalname,
+              Body: req.file.buffer
+            };
+            await Services.uploadImageS3(objectParams);
+          } catch (errS3) {
+            // rollback upload
+            console.log('RDS error: ')
+            console.log(errS3)
+            connection.rollback((errRollback) => {
+              next(errRollback);
+            });
+            next(errS3);
+          }
+        })
+      })
+      connection.commit(function(errCommit) {
+        if (errCommit) { 
+          connection.rollback(function(errRoll) {
+            next(errRoll);
+          });
+          next(errCommit);
+        }
+        console.log('Transaction Complete.');
+        connection.release();
+      });
+    })
+    res.status(201).send()
   }
 
 }
