@@ -11,6 +11,10 @@ module.exports= {
   es_user:process.env.ELASTICSEARCH_USERNAME,
   es_index:process.env.ELASTICSEARCH_INDEX,
   es_type:process.env.ELASTICSEARCH_TYPE,
+  aws_es_host: process.env.AWS_ELASTIC_HOST,
+  aws_es_user: process.env.AWS_ELASTIC_USER,
+  aws_es_pass: process.env.AWS_ELASTIC_PASSWORD,
+  aws_region: process.env.AWS_REGION,
   app_port: process.env.APP_PORT
 };
 
