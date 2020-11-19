@@ -1,38 +1,12 @@
 const esconfig = require('../configs/esConfig');
 const client = esconfig.esClient;
 const config = require('../configs/config');
-const esb = require('elastic-builder'); //the builder
-const dbconfig = require('../configs/dbConfig');
-const dbClient = dbconfig.dbClient;
+const s3config = require('../configs/S3config');
 const AWS = require("aws-sdk");
 
 module.exports = {
-
+  // Adapt search query based on provided parameters, using defaults where parameters missing
   async search(offset, min, max, description, fileType) {
-    // const requestBody = esb.requestBodySearch()
-    //     .from(offset)
-    //     .size(20)
-    //     .query(
-    //         esb.boolQuery()
-    //         .must([
-    //             esb.matchQuery(
-    //                 'description', description
-    //             ),
-    //             esb.rangeQuery('size').gte(min).lte(max)
-    //         ])
-    //         .filter(esb.termQuery('type', fileType))
-    //     )
-    // let esbRequestBody = esb.requestBodySearch()
-    //     .from(offset)
-    //     .size(20)
-    //     .query(
-    //         esb.boolQuery()
-    //         .must([
-    //             esb.rangeQuery('size').gte(min).lte(max)
-    //         ])
-    //     )
-
-    // console.log(esbRequestBody)
     if (isNaN(offset) || offset < 0) {
       offset = 0;
     }
@@ -66,11 +40,11 @@ module.exports = {
       }
     }
 
-    if (description) {
+    if (description && description !== 'undefined') {
       request.body.query.bool.must.unshift({
-        match: {
-          description: {
-            query: description
+        match: { 
+          description: { 
+            query: description // value: description || query: description
           }
         }
       })
@@ -90,50 +64,9 @@ module.exports = {
     return client.search(request);
   },
 
-  async uploadImageRDS(req) {
-    return dbClient.connect(() => {
-      dbClient.query(`INSERT INTO main.uploads (description, type, size) ` +
-        `VALUES ('${req.body['description']}', '${req.file.mimetype}', '${req.file.size}')`);
-    });
-  },
-
   async uploadImageS3(objectParams) {
     // TODO replace old API call?
-    return new AWS.S3({
-      apiVersion: '2006-03-01'
-    }).putObject(objectParams).promise();
+    return s3config.bucket.putObject(objectParams).promise();
   },
 
-  async deleteImageS3(objectParams) {
-    // TODO replace old API call?
-    return new AWS.S3({
-      apiVersion: '2006-03-01'
-    }).deleteObject(objectParams).promise();
-  }
 };
-
-/*
-
-  client.search({
-    from: offset,
-    size: 20,
-    index: 'images',
-    type: 'image',
-    body: {
-      query: {
-            match: {
-              description: {
-                query: description
-              }
-            },
-      }
-    }
-  }).then(function(response) {
-    var hits = response.hits.hits;
-    console.log(hits)
-    res.status(200).send(hits)
-  }).catch(function (error) {
-    console.trace(error.message);
-  });
-
-*/

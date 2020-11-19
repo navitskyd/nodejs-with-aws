@@ -1,7 +1,7 @@
 require('dotenv').config()
 const dbconfig = require('./dbConfig')
 
-const dbClient = dbconfig.dbClient;
+const dbPool = dbconfig.dbPool;
 
 /*
   Schema
@@ -11,7 +11,10 @@ const dbClient = dbconfig.dbClient;
   size: number
 */
 
-dbClient.connect(function(err) {
+const connection = await dbPool.getConnection();
+
+
+connection.connect(function(err) {
   if (err) {
     console.error('Database connection failed: ' + err.stack);
     return;

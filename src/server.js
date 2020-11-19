@@ -4,7 +4,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const esconfig = require('../configs/esConfig');
-const dbconfig = require('../configs/dbConfig');
 let helmet = require("helmet");
 const app = express()
 app.use(helmet.hidePoweredBy());
@@ -12,7 +11,6 @@ app.use(helmet.hidePoweredBy());
 // Config loading
 const router  = require("./routes")
 const esClient = esconfig.esClient;
-const dbClient = dbconfig.dbClient;
 
 // Server setup
 app.use(cors());
