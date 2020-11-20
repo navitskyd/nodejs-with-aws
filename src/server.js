@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const esconfig = require('../configs/esConfig');
+const esconfig = require('./configs/esConfig');
 let helmet = require("helmet");
 const app = express()
 app.use(helmet.hidePoweredBy());
@@ -12,8 +12,11 @@ app.use(helmet.hidePoweredBy());
 const router  = require("./routes")
 const esClient = esconfig.esClient;
 
+let corsOptions = {
+  origin: 'http://localhost:4200' // Compliant
+};
 // Server setup
-app.use(cors());
+app.use(cors(corsOptions));
 app.use("/", router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -1,5 +1,5 @@
 const Services = require('./services');
-const dbconfig = require('../configs/dbConfig');
+const dbconfig = require('./configs/dbConfig');
 
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
     const min = req.query.mn;
     const max = req.query.mx;
     const description = decodeURIComponent(req.query.d);
-    const fileType = req.query.t;
+    const fileType = decodeURIComponent(req.query.t);
 
     // TODO remove log
     console.log(offset)

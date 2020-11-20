@@ -1,7 +1,7 @@
-const esconfig = require('../configs/esConfig');
+const esconfig = require('./configs/esConfig');
 const client = esconfig.esClient;
-const config = require('../configs/config');
-const s3config = require('../configs/S3config');
+const config = require('./configs/config');
+const s3config = require('./configs/S3config');
 const AWS = require("aws-sdk");
 
 module.exports = {
@@ -20,7 +20,6 @@ module.exports = {
       from: offset,
       size: 20,
       index: config.es_index,
-      type: config.es_type,
       body: {
         query: {
           bool: {
@@ -49,7 +48,8 @@ module.exports = {
         }
       })
     }
-    if (fileType) {
+    if (fileType && fileType !== 'undefined') {
+      console.log('wut: '+ fileType)
       request.body.query.bool = {
         ...request.body.query.bool,
         filter: {
