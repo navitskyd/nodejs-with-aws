@@ -2,6 +2,7 @@ require('dotenv').config()
 const dbconfig = require('../src/configs/dbConfig')
 const esconfig = require('../src/configs/esConfig')
 const Services = require('../src/services');
+var fs = require('fs');
 
 async function migrateRDSToES() {
     const pool = dbconfig.dbPool;
@@ -91,6 +92,7 @@ async function migrateRDSToES() {
             try {
                 const result = await Services.search(0, 0, 500000, null, null);
                 const data = result.hits.hits
+                
                 // TODO remove log
                 console.log(data)
             } catch (err) {
@@ -100,6 +102,7 @@ async function migrateRDSToES() {
 
         });
         con.release()
+        pool.end()
     })
 
 

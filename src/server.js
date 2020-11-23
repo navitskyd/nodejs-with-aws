@@ -3,14 +3,12 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const esconfig = require('./configs/esConfig');
 let helmet = require("helmet");
 const app = express()
 app.use(helmet.hidePoweredBy());
 
 // Config loading
 const router  = require("./routes")
-const esClient = esconfig.esClient;
 
 let corsOptions = {
   origin: 'http://localhost:4200' // Compliant
@@ -21,18 +19,42 @@ app.use("/", router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Test ES cluster
-esClient.ping({}, function(error) {
-  if (error) {
-      console.log('ES Cluster is down', error);
-  } else {
-      console.log('ES Cluster is up!');
-  }
-});
-
 // Run server
 app.set('port', process.env.APP_PORT || 8080);
 
 app.listen(app.get('port'), () => {
     console.log(`Express server listening on port, ${app.get('port')}`)
   })
+
+
+
+
+
+
+  const express = require('express')
+const { MongoClient } = require('mongodb')
+const PORT = process.env.PORT || 3000
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017'
+const MONGODB_DB = process.env.MONGODB_DB || 'todoman'
+main()
+async function main() {
+    const mongoClient = await MongoClient.connect(MONGODB_URI, {
+        useNewUrlParser: true
+    })
+    const db = mongoClient.db(MONGODB_DB)
+    const app = express()
+    app.use(function attachDb(req, res, next) {
+        req.db = db
+        next()
+    })
+    app.get('/', function(req, res, next) {
+        res.status(200).json({ name: 'todoman-backend' })
+    })
+    app.listen(PORT, err => {
+        if (err) {
+            throw err
+        }
+        // eslint-disable-next-line no-console
+        console.log(`api-server listening on port ${PORT}`)
+    })
+}

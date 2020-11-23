@@ -1,7 +1,7 @@
 require('dotenv').config()
-const dbconfig = require('./configs/dbConfig')
+const dbconfig = require('../src/configs/dbConfig')
 
- function migrateDb() {
+ function createDb() {
   const pool = dbconfig.dbPool;
 
   /*
@@ -24,12 +24,13 @@ const dbconfig = require('./configs/dbConfig')
         con.query('USE main;');
         con.query('CREATE TABLE IF NOT EXISTS uploads(id int NOT NULL AUTO_INCREMENT, description varchar(256), type varchar(30), size int, PRIMARY KEY(id));', function(error, result, fields) {
             console.log(result);
+            con.release();
+           pool.end()
         });
+      
+      
     })
-  
-  
 }
 
-migrateDb();
-
+createDb();
 

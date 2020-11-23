@@ -1,6 +1,8 @@
 'use strict'
 const AWS = require("aws-sdk");
 var util = require('util')
+const config = require('./config');
+const mysql = require("mysql");
 
 AWS.config.getCredentials(function (err) {
   if (err) console.log(err.stack);
@@ -8,9 +10,6 @@ AWS.config.getCredentials(function (err) {
     console.log("Access key:", AWS.config.credentials.accessKeyId);
   }
 });
-
-const config = require('./config');
-const mysql = require("mysql")
 
 const pool = mysql.createPool({
     connectionLimit: 10,

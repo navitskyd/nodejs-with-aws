@@ -26,6 +26,14 @@ const client = new elasticsearch.Client({
     }
 });
 
+// Test ES cluster
+client.ping({}, function(error) {
+  if (error) {
+      console.log('ES Cluster is down', error);
+  } else {
+      console.log('ES Cluster is up!');
+  }
+});
 // const client = new Client({ host: config.aws_es_host });
 module.exports.esClient= client;
 

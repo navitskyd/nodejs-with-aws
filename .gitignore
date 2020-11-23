@@ -47,3 +47,5 @@ Thumbs.db
 
 .scannerwork
 .env
+coverage
+.nyc_output

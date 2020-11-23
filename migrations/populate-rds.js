@@ -18,7 +18,6 @@ function populateDb() {
             console.log(err);
             return;
         }
-
         console.log('Connected to database.');
 
         con.query('CREATE DATABASE IF NOT EXISTS main;');
@@ -42,6 +41,8 @@ function populateDb() {
             }
            else {
             console.log(result);
+            con.release()
+            pool.end()
             }
           });
     })
@@ -49,5 +50,4 @@ function populateDb() {
 }
 
 populateDb();
-
 
