@@ -3,7 +3,7 @@
 
 const mysql = require("mysql");
 const { dbConfig } = require('../../src/config/vars');
-const MockedDb = require("../../util/MockedDb");
+const MockedDb = require("../mocks/MockedDb");
 
 exports.useInTest = function () {
     beforeEach(async function connectToTestDB() {

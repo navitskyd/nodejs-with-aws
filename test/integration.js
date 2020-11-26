@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const testDb = require('./config/test-db')
 const testServer = require('./test-server')
-const DbDao = require("../util/DbDao");
+const DbDao = require("../src/api/services/database");
 const testS3 = require('./config/test-S3config')
 const path = require('path');
 const { expect } = require('chai');

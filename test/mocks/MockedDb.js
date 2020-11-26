@@ -1,4 +1,4 @@
-const DbDriver = require('../src/config/dbConfig')
+const DbDriver = require('../../src/config/dbConfig')
 
 class MockedDb extends DbDriver{
     async connect() {
