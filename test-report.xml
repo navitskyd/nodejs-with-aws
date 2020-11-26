@@ -1,2 +1,10 @@
 <testExecutions version="1">
+<file path="test\integration.js">
+<testCase name="POST /upload: responds with 201 for valid upload" duration="44"/>
+<testCase name="POST /upload: responds with 400 for no params" duration="0"/>
+<testCase name="POST /upload: responds with 400 for no description" duration="5"/>
+<testCase name="POST /upload: responds with 400 for no file" duration="3"/>
+<testCase name="POST /upload: responds with 500 when database is badly configured" duration="38"/>
+<testCase name="POST /upload: responds with 500 when s3 is badly configured" duration="1"/>
+</file>
 </testExecutions>

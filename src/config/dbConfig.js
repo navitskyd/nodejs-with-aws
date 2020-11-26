@@ -43,11 +43,4 @@ class DbDriver {
    }
 }
 
-let config = {
-    host     : dbConfig.db_host,
-    user     : dbConfig.db_user,
-    password : dbConfig.db_password,
-    port     : dbConfig.db_port
-}
-
 module.exports = DbDriver;

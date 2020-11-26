@@ -4,11 +4,11 @@ const testServer = require('./test-server')
 const DbDao = require("../src/api/services/database");
 const testS3 = require('./config/test-S3config')
 const path = require('path');
-const { expect } = require('chai');
 
 describe('POST /upload', function() {
     testDb.useInTest()
     testServer.useInTest()
+    testS3.useInTest()
     let dbDao;
 
     beforeEach(async function () {
