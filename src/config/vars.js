@@ -15,6 +15,8 @@ module.exports = {
     db_user: process.env.NODE_ENV === 'test' ? process.env.TEST_DB_USER : process.env.DB_USER,
     db_password: process.env.NODE_ENV === 'test' ? process.env.TEST_DB_PASSWORD : process.env.DB_PASSWORD,
     db_port: process.env.NODE_ENV === 'test' ? process.env.TEST_DB_PORT : process.env.DB_PORT,
+    db_db: process.env.NODE_ENV === 'test' ? process.env.TEST_DB : process.env.DB_DB,
   },
   aws_bucket: process.env.NODE_ENV === 'test' ? process.env.TEST_AWS_BUCKET : process.env.AWS_BUCKET,
+  aws_region: process.env.AWS_REGION
 };
