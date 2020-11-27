@@ -2,6 +2,7 @@ const DbDriver = require('../src/config/dbConfig')
 const DbDao = require('../src/api/services/database')
 const fs = require('fs');
 const path = require('path');
+const { dbConfig } = require('../src/config/vars')
 
 async function populateDb() {
     const db = new DbDriver();
@@ -16,8 +17,8 @@ async function populateDb() {
     */
     try {
         await db.connect();
-        await db.query('CREATE DATABASE IF NOT EXISTS main;');
-        await db.query('USE main;');
+        await db.query(`CREATE DATABASE IF NOT EXISTS ${dbConfig.db_db};`);
+        await db.query(`USE ${dbConfig.db_db};`);
         await dbDao.createTable();
         let rawdata = fs.readFileSync(path.join(__dirname, './data/request-data.json'));
         let data = JSON.parse(rawdata);
