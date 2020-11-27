@@ -1,4 +1,3 @@
-
 class DbDao {
     constructor(db) {
         this.db = db;

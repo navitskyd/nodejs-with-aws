@@ -1,7 +1,6 @@
 const DbDriver = require('../../config/dbConfig');
 const DbDao = require('../services/database')
 const { uploadImageS3 } = require('../services/S3')
-const { env } = require('../../config/vars')
  
 exports.upload = async (req, res, next) => {
   if (req.file === undefined) {

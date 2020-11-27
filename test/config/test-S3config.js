@@ -1,21 +1,3 @@
-// 'use strict'
-// const { aws_bucket, aws_region } = require('../../src/config/vars');
-// const AWS = require("aws-sdk");
-// const { S3Client, CreateBucketCommand } = require("@aws-sdk/client-s3");
-
-// AWS.config.getCredentials(function (err) {
-//     if (err) console.log(err.stack);
-//     else {
-//       console.log("Access key:", AWS.config.credentials.accessKeyId);
-//     }
-//   });
-  
-// const bucket = new AWS.S3({params: {Bucket: aws_bucket}});
-
-// module.exports.bucket= bucket;
-
-
-
 /* eslint-env mocha */
 const { aws_bucket, aws_region } = require('../../src/config/vars');
 const AWSMock = require('mock-aws-s3');
