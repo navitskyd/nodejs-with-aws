@@ -1,4 +1,6 @@
-# Q1 Upload Feature
+
+### Description
+Fullstack Angular/NodeJs app with 80% test coverage. The user can upload a JPEG/PNG with a description which will be sent to the backend via API call. The backend will then take the image information and store it in a MySQL AWS RDS instance and store the image itself in an S3 bucket. To be used in conjunction with https://github.com/KazToozs/ImageDrive-Search.
 
 ### Dependencies
 - A **AWS RDS** instance with MySQL database to upload to
@@ -90,6 +92,3 @@ sonar.coverage.exclusions=migrations\\*,test\\**\\*,src\\**\\*.spec.js,src\\**\\
 sonar.javascript.lcov.reportPaths=coverage\\lcov.info
 sonar.testExecutionReportPaths=test-report.xml
 ```
-#### Contact
-Email: will2s.hobson@gmail.com
-Phone: +33 6 72 94 93 46 
