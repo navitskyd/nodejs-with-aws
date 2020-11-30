@@ -1,0 +1,51 @@
+#upload-card-container {
+  display: flex;
+  justify-content: center;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.ui-message {
+  margin: 10px;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-hint {
+  color: lightgray;
+}
+
+#file-label {
+  color: lightgray;
+}
+
+::ng-deep .mat-form-field {
+  .mat-input-element {
+      color: lightgray;
+  }
+  .mat-form-field-label {
+      color: lightgray;
+  }
+  .mat-form-field-underline {
+      background-color: lightgray;
+  }
+  .mat-form-field-ripple {
+      background-color: lightgray;
+  }
+  .mat-form-field-required-marker {
+      color: lightgray;
+  }
+}
+
+ul,
+li {
+      margin: 0 0 10px 0;
+      padding: 0;
+      list-style: none;
+}

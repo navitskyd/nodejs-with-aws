@@ -6,6 +6,7 @@
   "scripts": {
     "initialise": "npm run migrate & npm run start",
     "migrate": "(node ./migrations/emptyDb.js) & node ./migrations/populateDb.js",
+    "empty-db": "node ./migrations/emptyDb.js",
     "start": "node main.js",
     "unit-tests": "nyc --reporter=lcov --reporter=text mocha -- --timeout 40000 --exit --reporter=node_modules/mocha-sonarqube-reporter test/integration.js --reporter-options output=test-report.xml",
     "integration-tests": "nyc mocha --timeout 40000 --exit test/integration.js",
