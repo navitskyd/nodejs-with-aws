@@ -2,6 +2,8 @@
 ### Description
 Fullstack Angular/NodeJs app with 80% test coverage. The user can upload a JPEG/PNG with a description which will be sent to the backend via API call. The backend will then take the image information and store it in a MySQL AWS RDS instance and store the image itself in an S3 bucket. To be used in conjunction with https://github.com/KazToozs/ImageDrive-Search.
 
+**Demo here**: https://youtu.be/248aGh1D_Tw
+
 ### Dependencies
 - A **AWS RDS** instance with MySQL database to upload to
 - A **AWS S3** bucket to upload to, a second one for tests is preferable
