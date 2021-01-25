@@ -4,7 +4,7 @@ class DbDao {
     }
 
     async create(image) {
-        return this.db.query("INSERT INTO uploads(description, type, size) VALUES(?,?,?);", [image.description, image.type, image.size]);
+        return this.db.query("INSERT INTO uploads(name, description, type, size) VALUES(?,?,?,?);", [image.name,image.description, image.type, image.size]);
     }
 
     async dropTable() {

@@ -7,7 +7,7 @@
     "initialise": "concurrently \"cd ../backend-upload && npm run initialise\" \"npm run start\"",
     "dev": "concurrently \"cd ../backend-upload && npm run start\" \"npm run start\"",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --disableHostCheck",
     "build": "ng build",
     "test": "ng test --code-coverage=true",
     "lint": "ng lint",
