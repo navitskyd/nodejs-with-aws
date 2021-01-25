@@ -70,7 +70,7 @@ exports.unsubscribe = async (req, res, next) => {
         TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'
     };
 
-    sns.listSubscriptionsByTopic(params)
+    sns.listSubscriptionsByTopic(params).promise()
         .then((data) => {
             console.log(data)
         })
