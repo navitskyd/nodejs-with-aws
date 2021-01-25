@@ -41,6 +41,6 @@ exports.subscribe = async (req, res, next) => {
         res.status(400).send('Email is not defined!');
     }
 
-    res.status(200).send(email + ' subscribed!');
+    res.status(200).send();
 }
 
