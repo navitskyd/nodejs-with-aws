@@ -73,16 +73,7 @@ exports.unsubscribe = async (req, res, next) => {
     sns.listSubscriptionsByTopic(params).promise()
         .then((data) => {
             if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
-                //unsubscribe
-                sns.unsubscribe({SubscriptionArn: data['SubscriptionArn']}, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(data);
-                        res.send(data);
-                    }
-                });
-
+                console.log(data);
             }
         })
         .catch((err) => {
@@ -90,5 +81,14 @@ exports.unsubscribe = async (req, res, next) => {
         });
 
 
+    //unsubscribe
+    sns.unsubscribe({SubscriptionArn: 'arn:aws:sns:eu-west-2:668312079829:new-image:7073fa8e-22b6-4571-983e-1f9b1633ac96'}, (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(data);
+            res.send(data);
+        }
+    });
 }
 
