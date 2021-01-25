@@ -80,6 +80,7 @@ exports.unsubscribe = async (req, res, next) => {
     console.log(targetSubscription);
     if (targetSubscription['SubscriptionArn'] === 'PendingConfirmation') {
         res.send(email + " is not confirmed!");
+        return;
     }
 
     // unsubscribe
