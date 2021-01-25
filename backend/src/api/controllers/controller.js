@@ -67,9 +67,20 @@ exports.unsubscribe = async (req, res, next) => {
     }
 
     let params = {
-        Protocol: 'EMAIL',
-        TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image',
-        Endpoint: email
+        TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'
+    };
+
+    sns.listSubscriptionsByTopic(params)
+        .then((data) => {
+            console.log(data)
+        })
+        .catch((err) => {
+            console.error(err, err.stack);
+        });
+
+    //unsubscribe
+    params = {
+        SubscriptionArn: 'EMAIL'
     };
 
     sns.unsubscribe(params, (err, data) => {
