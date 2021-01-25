@@ -93,10 +93,10 @@ exports.unsubscribe = async (req, res, next) => {
         } else {
             console.log(data);
             res.send(data);
+
         }
     });
 
 
-    res.send("Done");
 }
 
