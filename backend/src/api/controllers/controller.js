@@ -35,3 +35,12 @@ exports.upload = async (req, res, next) => {
 
 }
 
+exports.subscribe = async (req, res, next) => {
+    let email = req.body['email'];
+    if (!email) {
+        res.status(400).send('Email is not defined!');
+    }
+
+    res.status(200).send(email + ' subscribed!');
+}
+
