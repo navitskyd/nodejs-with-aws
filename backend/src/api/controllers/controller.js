@@ -66,16 +66,18 @@ exports.unsubscribe = async (req, res, next) => {
         res.status(400).send('Email is not defined!');
     }
 
-    sns.listSubscriptionsByTopic({TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'}).promise()
+    let targetSubscription;
+    await sns.listSubscriptionsByTopic({TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'}).promise()
         .then((data) => {
-            console.log(data);
-            if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
-                console.log("FOUND!");
-            }
+            targetSubscription = data['Subscriptions'].find(subscription => {
+                return subscription['Protocol'] === 'email' && subscription['Endpoint'] === email
+            })
         })
         .catch((err) => {
             console.error(err, err.stack);
         });
+
+    console.log(targetSubscription);
 
 
     //unsubscribe
