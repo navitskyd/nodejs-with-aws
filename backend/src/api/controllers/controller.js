@@ -66,19 +66,15 @@ exports.unsubscribe = async (req, res, next) => {
         res.status(400).send('Email is not defined!');
     }
 
-    let params = {
-        TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'
-    };
-
-    sns.listSubscriptionsByTopic(params).promise()
-        .then((data) => {
-            if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
-                console.log(data);
-            }
-        })
-        .catch((err) => {
-            console.error(err, err.stack);
-        });
+    // sns.listSubscriptionsByTopic({TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'}).promise()
+    //     .then((data) => {
+    //         if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
+    //             console.log(data);
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.error(err, err.stack);
+    //     });
 
 
     //unsubscribe
