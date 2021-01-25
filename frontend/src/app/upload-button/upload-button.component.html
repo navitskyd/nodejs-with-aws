@@ -1,0 +1,30 @@
+<div id="upload-card-container" style="text-align:center; margin-top: 100px; ">
+  <mat-card style="margin-top:10px; width: 50%;">
+    <mat-card-content>
+      <div class="ui-message">{{UIMessage | async}}</div>
+      <ul>
+        <li *ngIf="fileToUpload">
+          <span id="file-label">
+            {{fileToUpload.data.name}}
+          </span>
+
+        </li>
+        <mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input matInput #message maxlength="256" [formControl]="description">
+          <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+          <mat-error *ngIf="description.invalid">Please input description</mat-error>
+        </mat-form-field>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="warn" (click)="fileUpload.click()">
+        <mat-icon>file_upload</mat-icon>
+        {{ fileToUpload ? "Change" : "Upload"}}
+      </button>
+      <button *ngIf="fileToUpload" mat-button color="warn" (click)="uploadFile(fileToUpload)">Submit image</button>
+    </mat-card-actions>
+  </mat-card>
+  <input type="file" #fileUpload (change)="onFileChanged($event)" id="fileUpload" name="fileUpload"
+    accept="image/x-png,image/jpeg" style="display:none;" />
+</div>

@@ -1,0 +1,48 @@
+{
+  "name": "backend-upload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "initialise": "npm run migrate & npm run start",
+    "migrate": "(node ./migrations/emptyDb.js) & node ./migrations/populateDb.js",
+    "empty-db": "node ./migrations/emptyDb.js",
+    "start": "node main.js",
+    "unit-tests": "nyc --reporter=lcov --reporter=text mocha -- --timeout 40000 --exit --reporter=node_modules/mocha-sonarqube-reporter test/integration.js --reporter-options output=test-report.xml",
+    "integration-tests": "nyc mocha --timeout 40000 --exit test/integration.js",
+    "sonar": "sonar-scanner"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KazToozs/ImageDrive-Back-Upload.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KazToozs/ImageDrive-Back-Upload/issues"
+  },
+  "homepage": "https://github.com/KazToozs/ImageDrive-Back-Upload#readme",
+  "dependencies": {
+    "aws-sdk": "^2.798.0",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "getport": "^0.1.0",
+    "helmet": "^4.2.0",
+    "mock-aws-s3": "^4.0.1",
+    "mock-s3": "^1.0.2",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "nyc": "^15.1.0"
+  },
+  "devDependencies": {
+    "axios": "^0.21.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.2.1",
+    "mocha-sonarqube-reporter": "^1.0.2",
+    "sonar-scanner": "^3.1.0",
+    "supertest": "^6.0.1"
+  }
+}
