@@ -68,8 +68,9 @@ exports.unsubscribe = async (req, res, next) => {
 
     sns.listSubscriptionsByTopic({TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image'}).promise()
         .then((data) => {
+            console.log(data);
             if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
-                console.log(data);
+                console.log("FOUND!");
             }
         })
         .catch((err) => {
