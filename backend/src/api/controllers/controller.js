@@ -87,7 +87,7 @@ exports.unsubscribe = async (req, res, next) => {
     }
 
     // unsubscribe
-    sns.unsubscribe({SubscriptionArn: 'arn:aws:sns:eu-west-2:668312079829:new-image:7073fa8e-22b6-4571-983e-1f9b1633ac96'}, (err, data) => {
+    sns.unsubscribe({SubscriptionArn: targetSubscription['SubscriptionArn']}, (err, data) => {
         if (err) {
             console.log(err);
         } else {
