@@ -71,7 +71,7 @@ exports.unsubscribe = async (req, res, next) => {
     };
 
     let targetSubscription;
-    await sns.listSubscriptionsByTopic(params).promise()
+    let result = await sns.listSubscriptionsByTopic(params).promise()
         .then((data) => {
             if (data['Protocol'] === 'email' && data['Endpoint'] === email) {
                 targetSubscription = data['SubscriptionArn'];
