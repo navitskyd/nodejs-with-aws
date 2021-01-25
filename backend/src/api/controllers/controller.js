@@ -60,3 +60,27 @@ exports.subscribe = async (req, res, next) => {
 
 }
 
+exports.unsubscribe = async (req, res, next) => {
+    let email = req.body['email'];
+    if (!email) {
+        res.status(400).send('Email is not defined!');
+    }
+
+    let params = {
+        Protocol: 'EMAIL',
+        TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image',
+        Endpoint: email
+    };
+
+    sns.unsubscribe(params, (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(data);
+            res.send(data);
+        }
+    });
+
+
+}
+
