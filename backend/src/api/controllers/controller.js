@@ -1,6 +1,7 @@
 const DbDriver = require('../../config/dbConfig');
-const DbDao = require('../services/database')
-const {uploadImageS3} = require('../services/S3')
+const DbDao = require('../services/database');
+const {uploadImageS3} = require('../services/S3');
+const {sns} = require('../../config/SNS');
 
 exports.upload = async (req, res, next) => {
 
@@ -40,6 +41,21 @@ exports.subscribe = async (req, res, next) => {
     if (!email) {
         res.status(400).send('Email is not defined!');
     }
+
+    let params = {
+        Protocol: 'EMAIL',
+        TopicArn: 'arn:aws:sns:eu-west-2:668312079829:new-image:7073fa8e-22b6-4571-983e-1f9b1633ac96',
+        Endpoint: email
+    };
+
+    sns.subscribe(params, (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(data);
+            res.send(data);
+        }
+    });
 
     res.status(200).send();
 }
