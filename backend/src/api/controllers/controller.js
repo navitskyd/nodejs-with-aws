@@ -86,5 +86,7 @@ exports.unsubscribe = async (req, res, next) => {
     //         res.send(data);
     //     }
     // });
+
+    res.send("Done");
 }
 
