@@ -46,7 +46,7 @@ testem.log
 Thumbs.db
 
 .scannerwork
-.env
+
 coverage
 .nyc_output
 test-report.xml
