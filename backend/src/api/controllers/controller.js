@@ -24,7 +24,7 @@ exports.upload = async (req, res, next) => {
         console.log(err.stack);
     }
     res.status(201).send()
-
+return;
 
     const db = new DbDriver()
     const dbDao = new DbDao(db)
