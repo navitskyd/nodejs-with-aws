@@ -22,7 +22,7 @@ exports.uploadImageS3 = async (objectParams) => {
                 params = {Bucket: s3config.bucket.config.params['Bucket']};
                 console.log(params);
                 console.log("bucket created! ?>>>");
-                return _putObject(objectParams);
+                _putObject(objectParams);
             }
         });
     } else {
