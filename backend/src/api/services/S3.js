@@ -9,7 +9,8 @@ exports.uploadImageS3 = async (objectParams) => {
     }
   });
 
-  let buckets =  await new AWS.S3().listBuckets().promise();
+  let response =  await new AWS.S3().listBuckets().promise();
+  let buckets = response['Buckets'];
   console.log(buckets);
 
   return s3config.bucket.putObject(objectParams).promise();
