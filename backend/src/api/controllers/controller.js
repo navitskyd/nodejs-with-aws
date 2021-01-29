@@ -14,16 +14,20 @@ exports.upload = async (req, res, next) => {
         return;
     }
 
+    try{
+        const objectParams = {
+            Key: req.file.originalname,
+            Body: req.file.buffer
+        };
+        await uploadImageS3(objectParams);
+    }catch (err){
+        console.log(err.stack);
+    }
+
     const db = new DbDriver()
     const dbDao = new DbDao(db)
-    const objectParams = {
-        Key: req.file.originalname,
-        Body: req.file.buffer
-    };
+
     try {
-
-        await uploadImageS3(objectParams);
-
         await db.connect()
         await db.connection.beginTransactionPromise()
         await dbDao.create({name: req.file.originalname, description: req.body['description'], type: req.file.mimetype, size: req.file.size});
