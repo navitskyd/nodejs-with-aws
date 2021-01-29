@@ -21,10 +21,13 @@ exports.upload = async (req, res, next) => {
         Body: req.file.buffer
     };
     try {
+
+        await uploadImageS3(objectParams);
+
         await db.connect()
         await db.connection.beginTransactionPromise()
         await dbDao.create({name: req.file.originalname, description: req.body['description'], type: req.file.mimetype, size: req.file.size});
-        await uploadImageS3(objectParams);
+
         await db.connection.commitPromise();
         res.status(201).send()
         db.disconnect()
