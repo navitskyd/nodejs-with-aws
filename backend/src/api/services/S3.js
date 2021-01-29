@@ -17,7 +17,7 @@ exports.uploadImageS3 = async (objectParams) => {
 
     if (!buckets.some((bucket) => bucket['Name'] === s3config.bucket.config.params['Bucket'])) {
         console.log('NO BUCKET WITH NAME ' + s3config.bucket.config.params['Bucket']);
-        s3.createBucket({Bucket: s3config.bucket.config.params['Bucket']}, function (err, data) {
+        await s3.createBucket({Bucket: s3config.bucket.config.params['Bucket']}, function (err, data) {
             if (err) {
                 console.log(err);
             } else {
